@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install Angular dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build Angular (production)
+        working-directory: frontend
+        run: npx ng build --configuration production
+
+      - name: Run Angular tests
+        working-directory: frontend
+        run: npx ng test --watch=false
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore .NET dependencies
+        working-directory: backend
+        run: dotnet restore
+
+      - name: Build .NET API
+        working-directory: backend
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Run .NET tests
+        working-directory: backend
+        run: dotnet test --no-restore --configuration Release
+
+      - name: Publish .NET API
+        working-directory: backend
+        run: dotnet publish --no-restore --configuration Release --output ./publish
+
+      - name: Upload Angular build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: frontend/dist/
+
+      - name: Upload .NET publish artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-publish
+          path: backend/publish/
