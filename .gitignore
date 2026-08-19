@@ -1,0 +1,14 @@
+# .NET build output
+backend/bin/
+backend/obj/
+
+# Local run logs (created while testing locally, not part of the app)
+*.log
+
+# IDE
+.vs/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

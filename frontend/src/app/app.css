@@ -1,0 +1,34 @@
+main {
+  max-width: 480px;
+  margin: 4rem auto;
+  font-family: system-ui, sans-serif;
+  text-align: center;
+}
+
+.subtitle {
+  color: #666;
+  margin-top: -0.5rem;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.message {
+  font-weight: bold;
+}
+
+strong.connected {
+  color: green;
+}
+
+strong.error {
+  color: crimson;
+}
+
+strong.checking {
+  color: #999;
+}

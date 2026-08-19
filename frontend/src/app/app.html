@@ -1,0 +1,13 @@
+<main>
+  <h1>CI/CD Learning Project</h1>
+  <p class="subtitle">Angular Application</p>
+
+  <section class="card">
+    <p>
+      Backend Status:
+      <strong [class]="status()">{{ status() }}</strong>
+    </p>
+    <p>Message from API:</p>
+    <p class="message">{{ message() || '(waiting...)' }}</p>
+  </section>
+</main>
